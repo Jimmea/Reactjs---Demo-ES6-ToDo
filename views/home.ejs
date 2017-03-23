@@ -1,0 +1,40 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Hoc react</title>
+    <script src="js/react.min.js"></script>
+    <script src="js/react-dom.min.js"></script>
+    <script src="js/browser.min.js"></script>
+    <style>
+        .orange {
+            color: gold;
+        }
+    </style>
+    <script>
+        class Human {
+            constructor() {}
+            static ping() {
+                return 'ping';
+            }
+        }
+
+        class Computer extends Human {
+            constructor() {}
+            static pingpong() {
+                return super.ping() + ' pong';
+            }
+        }
+        console.log(Computer.pingpong()); // 'ping pong'
+    </script>
+</head>
+<body>
+    <div id="root">
+
+    </div>
+    <div id="comments">
+
+    </div>
+    <script src="components/home.js" type="text/babel"></script>
+</body>
+</html>
