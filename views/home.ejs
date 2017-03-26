@@ -6,35 +6,15 @@
     <script src="js/react.min.js"></script>
     <script src="js/react-dom.min.js"></script>
     <script src="js/browser.min.js"></script>
-    <style>
-        .orange {
-            color: gold;
-        }
-    </style>
-    <script>
-        class Human {
-            constructor() {}
-            static ping() {
-                return 'ping';
-            }
-        }
-
-        class Computer extends Human {
-            constructor() {}
-            static pingpong() {
-                return super.ping() + ' pong';
-            }
-        }
-        console.log(Computer.pingpong()); // 'ping pong'
-    </script>
+    <script src="https://code.jquery.com/jquery-3.2.0.min.js"></script>
+    <link rel="stylesheet"
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" >
+    <link rel="stylesheet" href="css/layout.css">
 </head>
 <body>
-    <div id="root">
-
-    </div>
-    <div id="comments">
-
-    </div>
-    <script src="components/home.js" type="text/babel"></script>
+    <div id="container" class="container"></div>
+    <div id="root"></div>
+    <div id="comments"></div>
+    <script type="text/babel" src="components/home.js"></script>
 </body>
 </html>
