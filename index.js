@@ -1,6 +1,3 @@
-/**
- * Created by HUNG on 3/21/2017.
- */
 var express = require("express");
 var path    = require('path');
 var rweb    = require('./routes/web');

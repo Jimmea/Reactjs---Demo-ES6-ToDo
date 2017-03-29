@@ -1,4 +1,4 @@
-class GetListItem extends React.Component 
+class GetListItem extends React.Component
 {
     constructor(props) 
     {
@@ -93,8 +93,7 @@ class GetListItem extends React.Component
     }
 }
 
-
-class ShowListDay extends React.Component 
+class ShowListDay extends React.Component
 {
     constructor(props)
     {
@@ -213,3 +212,178 @@ ReactDOM.render(
     <AppTodo />,
     container
 )
+/*============================= EXAMPLE menu==================================== */
+class Menu extends React.Component
+{
+    constructor(props)
+    {
+        super(props)
+        this.state={ focused:0 }
+        this.clicked = this.clicked.bind(this)
+    }
+
+    clicked(index)
+    {
+        this.setState({focused:index})
+    }
+    render()
+    {
+        const self = this;
+        return (
+            <div>
+                <ul>
+                    { this.props.items.map(function (m, index) {
+                        var style = '';
+                        if(self.state.focused == index )
+                        {
+                            style = 'focused';
+                        }
+                        return <li className={style} onClick={self.clicked.bind(self, index)}>{m}</li>
+                    }) }
+                </ul>
+                <p>Selected :  { this.props.items[this.state.focused]}</p>
+            </div>
+        )
+    }
+}
+
+const items = ['Home', 'Services', 'About', 'Contact us'];
+ReactDOM.render(
+    <Menu items={ items }/>,
+    document.getElementById('root')
+)
+
+/*Realtime search*/
+class Search extends React.Component
+{
+    constructor(props)
+    {
+        super(props);
+        this.state = {searchString : ''}
+        this.handChange = this.handChange.bind(this);
+    }
+
+    handChange(e)
+    {
+        this.setState({searchString:e.target.value})
+    }
+
+    render()
+    {
+        var libraries    = this.props.items,
+            searchString  = this.state.searchString.trim().toLowerCase();
+        if (searchString.length >  0)
+        {
+            libraries =  libraries.filter(function (l) {
+                return l.name.toLowerCase().match(searchString)
+            })
+        }
+
+        return (
+            <div>
+                <input type="text"
+                       placeholder="SearchHere"
+                       value={this.state.searchString}
+                       onChange={this.handChange}/>
+                <ul>
+                    { libraries.map(function (l) {
+                        return <li>{l.name} <a href={l.url}>{l.url}</a></li>
+                    })}
+                </ul>
+            </div>
+        )
+    }
+}
+var libraries = [
+    { name: 'Backbone.js', url: 'http://documentcloud.github.io/backbone/'},
+    { name: 'AngularJS', url: 'https://angularjs.org/'},
+    { name: 'jQuery', url: 'http://jquery.com/'},
+    { name: 'Prototype', url: 'http://www.prototypejs.org/'},
+    { name: 'React', url: 'http://facebook.github.io/react/'},
+    { name: 'Ember', url: 'http://emberjs.com/'},
+    { name: 'Knockout.js', url: 'http://knockoutjs.com/'},
+    { name: 'Dojo', url: 'http://dojotoolkit.org/'},
+    { name: 'Mootools', url: 'http://mootools.net/'},
+    { name: 'Underscore', url: 'http://documentcloud.github.io/underscore/'},
+    { name: 'Lodash', url: 'http://lodash.com/'},
+    { name: 'Moment', url: 'http://momentjs.com/'},
+    { name: 'Express', url: 'http://expressjs.com/'},
+    { name: 'Koa', url: 'http://koajs.com/'},
+
+];
+ReactDOM.render(
+    <Search items={libraries}/>,
+    document.getElementById('comments')
+)
+
+/*Order Form*/
+
+class Service extends React.Component
+{
+    constructor(props)
+    {
+        super(props)
+        this.state = {active: false}
+        this.clickHandler = this.clickHandler.bind(this)
+    }
+
+    clickHandler()
+    {
+        let active = !this.state.active
+        this.setState({active:active})
+        this.props.addTotal(active ? this.props.price : - this.props.price)
+    }
+
+    render()
+    {
+        return (
+            <p className={this.state.active ? 'active' : ''}
+                onClick={this.clickHandler}>
+                {this.props.name} <b>{this.props.price.toFixed(2)}</b>
+            </p>
+        )
+    }
+}
+
+class ServiceChooser extends React.Component
+{
+    constructor(props)
+    {
+        super(props)
+        this.state = { total : 0}
+        this.addTotal  = this.addTotal.bind(this)
+    }
+
+    addTotal(price)
+    {
+        this.setState({total: this.state.total + price})
+    }
+
+    render()
+    {
+        var self = this
+        var service = this.props.items.map(function (s) {
+            return <Service name={s.name} price={s.price} active={s.active} addTotal={self.addTotal}/>
+        })
+        return (
+            <div>
+                <h1>Our services</h1>
+                <div id="services">
+                    {service},
+                    <p id="total">Total <b>{this.state.total.toFixed(2)}</b></p>
+                </div>
+            </div>
+        )
+    }
+}
+var services = [
+    { name: 'Web Development', price: 300 },
+    { name: 'Design', price: 400 },
+    { name: 'Integration', price: 250 },
+    { name: 'Training', price: 220 }
+];
+
+ReactDOM.render(
+    <ServiceChooser items={ services } />,
+    document.getElementById('order')
+);
